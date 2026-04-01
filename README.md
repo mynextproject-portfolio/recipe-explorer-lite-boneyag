@@ -33,7 +33,7 @@ Visit **http://localhost:8000**
 
 ## Sample Data
 
-The server automatically loads 3 example recipes from `sample-recipes.json` on startup — no manual upload needed. Edit this file and restart the server to see your changes.
+The server automatically loads 3 example recipes from `sample-recipes.json` on startup — no manual upload needed. Edit this file and restart the server to see your changes. Recipes now store instructions as an ordered list plus separate `region` and `cuisine` fields alongside tags.
 
 ## Testing
 

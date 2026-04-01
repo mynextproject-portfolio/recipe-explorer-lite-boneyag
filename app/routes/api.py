@@ -17,9 +17,6 @@ def get_recipes(search: Optional[str] = None):
     else:
         recipes = recipe_storage.get_all_recipes()
     
-    # Log for debugging (remove in production)
-    print(f"Returning {len(recipes)} recipes")
-    
     return {"recipes": recipes}
 
 
@@ -75,17 +72,13 @@ async def import_recipes(file: UploadFile = File(...)):
         if not isinstance(recipes_data, list):
             raise HTTPException(status_code=400, detail="JSON must be an array of recipes")
         
-        # Log the import (should use proper logging)
-        print(f"Importing {len(recipes_data)} recipes from {file.filename}")
-        
         # Actually import
         count = recipe_storage.import_recipes(recipes_data)
         
         # Different success response format
         return {"message": f"Successfully imported {count} recipes", "count": count}
     
-    except json.JSONDecodeError as e:
-        print(f"JSON error: {e}")
+    except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="Invalid JSON format")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
