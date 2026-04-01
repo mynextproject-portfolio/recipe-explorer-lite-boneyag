@@ -40,6 +40,28 @@ body {
     position: relative;
 }
 
+.instruction-item {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background: #fff;
+}
+
+.instruction-item.dragging {
+    opacity: 0.6;
+    border-style: dashed;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.15);
+}
+
+.instruction-drag-handle {
+    cursor: grab;
+    user-select: none;
+}
+
+.instruction-drag-handle:active {
+    cursor: grabbing;
+}
+
 .remove-ingredient, .remove-instruction {
     white-space: nowrap;
 }

@@ -43,6 +43,21 @@
                     <option value="Hard" {% if recipe and recipe.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
                 </select>
             </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="region" class="form-label">Region</label>
+                    <input type="text" class="form-control" id="region" name="region"
+                           value="{% if recipe and recipe.region %}{{ recipe.region }}{% endif %}"
+                           placeholder="e.g. Quebec">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="cuisine" class="form-label">Cuisine</label>
+                    <input type="text" class="form-control" id="cuisine" name="cuisine"
+                           value="{% if recipe and recipe.cuisine %}{{ recipe.cuisine }}{% endif %}"
+                           placeholder="e.g. Canadian">
+                </div>
+            </div>
             
             <div class="mb-3">
                 <label for="tags" class="form-label">Tags (comma-separated)</label>
@@ -84,9 +99,51 @@
             
             <!-- Instructions Section -->
             <div class="mb-4">
-                <label for="instructions" class="form-label">Instructions</label>
-                <textarea class="form-control" id="instructions" name="instructions" rows="8" required 
-                          placeholder="Enter complete cooking instructions...">{% if recipe %}{{ recipe.instructions }}{% endif %}</textarea>
+                <label class="form-label">Instructions</label>
+                <div id="instructions-container">
+                    {% if recipe and recipe.instructions %}
+                        {% for step in recipe.instructions %}
+                        <div class="instruction-item mb-2" draggable="true">
+                            <div class="row g-2 align-items-start">
+                                <div class="col-auto pt-2 d-flex flex-column align-items-center gap-2">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm instruction-drag-handle" draggable="true" aria-label="Drag to reorder">
+                                        Drag
+                                    </button>
+                                    <span class="instruction-number badge bg-primary">{{ loop.index }}</span>
+                                </div>
+                                <div class="col">
+                                    <textarea class="form-control instruction-input" name="instruction_steps" rows="2" required
+                                              placeholder="Enter instruction step...">{{ step }}</textarea>
+                                </div>
+                                <div class="col-auto pt-1">
+                                    <button type="button" class="btn btn-outline-danger remove-instruction">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="instruction-item mb-2" draggable="true">
+                            <div class="row g-2 align-items-start">
+                                <div class="col-auto pt-2 d-flex flex-column align-items-center gap-2">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm instruction-drag-handle" draggable="true" aria-label="Drag to reorder">
+                                        Drag
+                                    </button>
+                                    <span class="instruction-number badge bg-primary">1</span>
+                                </div>
+                                <div class="col">
+                                    <textarea class="form-control instruction-input" name="instruction_steps" rows="2" required
+                                              placeholder="Enter instruction step..."></textarea>
+                                </div>
+                                <div class="col-auto pt-1">
+                                    <button type="button" class="btn btn-outline-danger remove-instruction">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="button" id="add-instruction" class="btn btn-outline-primary btn-sm mt-2">
+                    + Add Step
+                </button>
             </div>
             
             <!-- Submit Buttons -->

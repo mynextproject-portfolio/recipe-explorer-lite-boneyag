@@ -1,10 +1,7 @@
 from typing import Dict, List, Optional
 from datetime import datetime
-import json  # TODO: Remove this - not used anymore
 from app.models import Recipe, RecipeCreate, RecipeUpdate
 
-# Global counter for analytics (can be used for analytics)
-recipe_view_count = {}
 
 class RecipeStorage:
     def __init__(self):
