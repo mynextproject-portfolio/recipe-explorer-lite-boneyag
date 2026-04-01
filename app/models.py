@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 from datetime import datetime
 from typing import List, Optional
 from enum import Enum
@@ -25,10 +25,9 @@ class Recipe(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.now)
 
 
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
+    @field_serializer("created_at", "updated_at")
+    def serialize_datetimes(self, value: datetime) -> str:
+        return value.isoformat()
 
 
 class RecipeCreate(BaseModel):
